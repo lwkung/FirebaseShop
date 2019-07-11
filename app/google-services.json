@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "292639078349",
+    "firebase_url": "https://fir-shop-c2edb.firebaseio.com",
+    "project_id": "fir-shop-c2edb",
+    "storage_bucket": "fir-shop-c2edb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292639078349:android:b741fb52426e4a03",
+        "android_client_info": {
+          "package_name": "com.test.firebaseshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292639078349-gdero7er2p35gd17bqhlma821bpokvq6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test.firebaseshop",
+            "certificate_hash": "2edde1819dc49c69e9be3bbe26140652ec0f0471"
+          }
+        },
+        {
+          "client_id": "292639078349-tejkrd90k560pfe3up369pte3rpv6m91.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBm696Jh2gdMP-WI21zNxbd1qimP9M5Huk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292639078349-tejkrd90k560pfe3up369pte3rpv6m91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

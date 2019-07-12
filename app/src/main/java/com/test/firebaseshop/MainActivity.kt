@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
@@ -73,10 +75,25 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         return when (item.itemId) {
             R.id.action_settings -> true
             R.id.action_signin -> {
+
                 startActivityForResult(
-                    Intent(this, SignInActivity::class.java),
+                    AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(
+                            Arrays.asList(
+                                AuthUI.IdpConfig.EmailBuilder().build(),
+                                AuthUI.IdpConfig.GoogleBuilder().build()
+                            )
+                        )
+                        .setIsSmartLockEnabled(false)
+                        .setLogo(R.drawable.shop)
+                        .build(),
                     RC_SIGNIN
                 )
+                /*startActivityForResult(
+                    Intent(this, SignInActivity::class.java),
+                    RC_SIGNIN
+                )*/
                 true
             }
             R.id.action_signout -> {

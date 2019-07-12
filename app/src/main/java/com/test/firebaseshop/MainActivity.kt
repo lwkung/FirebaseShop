@@ -82,7 +82,8 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                         .setAvailableProviders(
                             Arrays.asList(
                                 AuthUI.IdpConfig.EmailBuilder().build(),
-                                AuthUI.IdpConfig.GoogleBuilder().build()
+                                AuthUI.IdpConfig.GoogleBuilder().build(),
+                                AuthUI.IdpConfig.FacebookBuilder().build()
                             )
                         )
                         .setIsSmartLockEnabled(false)

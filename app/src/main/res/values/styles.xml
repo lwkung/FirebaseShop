@@ -14,4 +14,10 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="SignUp" parent="FirebaseUI">
+        <item name="colorPrimary">@color/material_blue_200</item>
+        <item name="colorPrimaryDark">@color/material_green_700</item>
+        <item name="colorAccent">@color/material_orange_500</item>
+        <item name="colorControlActivated">@color/material_blue_200</item>
+    </style>
 </resources>

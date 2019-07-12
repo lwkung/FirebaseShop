@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 
@@ -75,7 +76,13 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         return when (item.itemId) {
             R.id.action_settings -> true
             R.id.action_signin -> {
-
+                val whiteList = listOf<String>("tw","hk","cn","au")
+                val myLayout = AuthMethodPickerLayout.Builder(R.layout.sign_up)
+                    .setEmailButtonId(R.id.signup_email)
+                    .setFacebookButtonId(R.id.signup_facebook)
+                    .setGoogleButtonId(R.id.signup_google)
+                    .setPhoneButtonId(R.id.sighup_sms)
+                    .build()
                 startActivityForResult(
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
@@ -83,11 +90,17 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                             Arrays.asList(
                                 AuthUI.IdpConfig.EmailBuilder().build(),
                                 AuthUI.IdpConfig.GoogleBuilder().build(),
-                                AuthUI.IdpConfig.FacebookBuilder().build()
+                                AuthUI.IdpConfig.FacebookBuilder().build(),
+                                AuthUI.IdpConfig.PhoneBuilder()
+                                    .setWhitelistedCountries(whiteList)
+                                    .setDefaultCountryIso("tw")
+                                    .build()
                             )
                         )
                         .setIsSmartLockEnabled(false)
                         .setLogo(R.drawable.shop)
+                        .setTheme(R.style.SignUp)
+                        .setAuthMethodPickerLayout(myLayout)
                         .build(),
                     RC_SIGNIN
                 )

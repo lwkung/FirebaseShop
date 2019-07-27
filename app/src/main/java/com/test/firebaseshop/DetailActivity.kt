@@ -17,5 +17,6 @@ class DetailActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: ${item.id} / ${item.title}")
         web.settings.javaScriptEnabled = true
         web.loadUrl("https://litotom.com/shop/android9/")
+//        web.loadUrl(item.content)
     }
 }

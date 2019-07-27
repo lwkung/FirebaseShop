@@ -1,5 +1,6 @@
 package com.test.firebaseshop
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
             }
 
             override fun onBindViewHolder(holder: ItemHolder, position: Int, item: Item) {
+                item.id = snapshots.getSnapshot(position).id
                 holder.bindTo(item)
                 holder.itemView.setOnClickListener {
                     itemClicked(item, position)
@@ -67,6 +69,9 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
     private fun itemClicked(item: Item, position: Int) {
         Log.d(TAG, "itemClicked: ${item.title} / $position")
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("ITEM", item)
+        startActivity(intent)
     }
 
     override fun onAuthStateChanged(p0: FirebaseAuth) {

@@ -7,7 +7,10 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -24,8 +27,10 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
     private val RC_SIGNIN = 100
     private val TAG = MainActivity::class.java.simpleName
-    private lateinit var adapter: FirestoreRecyclerAdapter<Item, ItemHolder>
+    //    private lateinit var adapter: FirestoreRecyclerAdapter<Item, ItemHolder>
     var categories = mutableListOf<Category>()
+    lateinit var adapter: ItemAdapter
+    lateinit var itemViewModel: ItemViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +78,7 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                             }
 
                             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                                setupAdapter()
+//                                setupAdapter()
                             }
 
                         }
@@ -83,10 +88,42 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
             }
 
         //setupRecyclerView
-        setupAdapter()
+        recycler.setHasFixedSize(true)
+        recycler.layoutManager = LinearLayoutManager(this)
+        adapter = ItemAdapter(mutableListOf<Item>())
+        recycler.adapter = adapter
+        itemViewModel = ViewModelProviders.of(this)
+            .get(ItemViewModel::class.java)
+        itemViewModel.getItems().observe(this, androidx.lifecycle.Observer {
+            Log.d(TAG, "observe: ${it.size}")
+            adapter.items = it
+            adapter.notifyDataSetChanged()
+        })
+//        setupAdapter()
     }
 
-    private fun setupAdapter() {
+    inner class ItemAdapter(var items: List<Item>) : RecyclerView.Adapter<ItemHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
+            return ItemHolder(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_row, parent, false)
+            )
+        }
+
+        override fun getItemCount(): Int {
+            return items.size
+        }
+
+        override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+            holder.bindTo(items.get(position))
+            holder.itemView.setOnClickListener {
+                itemClicked(items.get(position), position)
+            }
+        }
+
+    }
+
+    /*private fun setupAdapter() {
         var selected = spinner.selectedItemPosition
         val query = if (selected > 0) {
             adapter.stopListening()
@@ -101,8 +138,6 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
                 .orderBy("viewCount", Query.Direction.DESCENDING)
                 .limit(10)
         }
-        recycler.setHasFixedSize(true)
-        recycler.layoutManager = LinearLayoutManager(this)
         val options = FirestoreRecyclerOptions.Builder<Item>()
             .setQuery(query, Item::class.java)
             .build()
@@ -123,7 +158,7 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         }
         recycler.adapter = adapter
         adapter.startListening()
-    }
+    }*/
 
     private fun itemClicked(item: Item, position: Int) {
         Log.d(TAG, "itemClicked: ${item.title} / $position")
@@ -147,13 +182,13 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
     override fun onStart() {
         super.onStart()
         FirebaseAuth.getInstance().addAuthStateListener(this)
-        adapter.startListening()
+//        adapter.startListening()
     }
 
     override fun onStop() {
         super.onStop()
         FirebaseAuth.getInstance().removeAuthStateListener(this)
-        adapter.stopListening()
+//        adapter.stopListening()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

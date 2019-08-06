@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
 
                             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 //                                setupAdapter()
+                                itemViewModel.setCategory(categories.get(position).id)
                             }
 
                         }

@@ -15,4 +15,7 @@ class ItemViewModel : ViewModel() {
         return firestoreQueryLiveData
     }
 
+    fun setCategory(categoryId: String) {
+        firestoreQueryLiveData.setCategory(categoryId)
+    }
 }

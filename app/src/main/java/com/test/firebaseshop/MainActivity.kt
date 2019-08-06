@@ -95,8 +95,14 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         itemViewModel = ViewModelProviders.of(this)
             .get(ItemViewModel::class.java)
         itemViewModel.getItems().observe(this, androidx.lifecycle.Observer {
-            Log.d(TAG, "observe: ${it.size}")
-            adapter.items = it
+            Log.d(TAG, "observe: ${it.size()}")
+            val list = mutableListOf<Item>()
+            for (doc in it.documents) {
+                val item = doc.toObject(Item::class.java) ?: Item()
+                item.id = doc.id
+                list.add(item)
+            }
+            adapter.items = list
             adapter.notifyDataSetChanged()
         })
 //        setupAdapter()

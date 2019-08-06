@@ -16,7 +16,17 @@ class ItemViewModel : ViewModel() {
             .limit(10)
             .addSnapshotListener { querySnapshot, exception ->
                 if (querySnapshot != null && !querySnapshot.isEmpty) {
-                    items.value = querySnapshot.toObjects(Item::class.java)
+                    val list = mutableListOf<Item>()
+                    for (doc in querySnapshot.documents) {
+                        val item = doc.toObject(Item::class.java) ?: Item()
+                        item.id = doc.id
+                        list.add(item)
+//                        val item = doc.toObject(Item::class.java)
+//                        item?.id = doc.id
+//                        list.add(item!!)
+                    }
+                    items.value = list
+//                    items.value = querySnapshot.toObjects(Item::class.java)
                 }
             }
         return items

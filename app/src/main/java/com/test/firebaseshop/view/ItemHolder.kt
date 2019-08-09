@@ -1,9 +1,11 @@
-package com.test.firebaseshop
+package com.test.firebaseshop.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.test.firebaseshop.R
+import com.test.firebaseshop.model.Item
 import kotlinx.android.synthetic.main.item_row.view.*
 
 class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {

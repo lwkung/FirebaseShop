@@ -1,9 +1,10 @@
-package com.test.firebaseshop
+package com.test.firebaseshop.data
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.test.firebaseshop.model.Item
 
 @Dao
 interface ItemDao {

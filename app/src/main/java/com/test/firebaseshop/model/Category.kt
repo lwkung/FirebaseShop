@@ -1,4 +1,4 @@
-package com.test.firebaseshop
+package com.test.firebaseshop.model
 
 data class Category(var id: String, var name: String) {
 

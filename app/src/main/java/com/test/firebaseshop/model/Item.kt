@@ -1,4 +1,4 @@
-package com.test.firebaseshop
+package com.test.firebaseshop.model
 
 import android.os.Parcelable
 import androidx.room.Entity

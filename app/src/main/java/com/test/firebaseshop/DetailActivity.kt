@@ -21,8 +21,8 @@ class DetailActivity : AppCompatActivity() {
         item = intent.getParcelableExtra<Item>("ITEM")
         Log.d(TAG, "onCreate: ${item.id} / ${item.title}")
         web.settings.javaScriptEnabled = true
-        web.loadUrl("https://litotom.com/shop/android9/")
-//        web.loadUrl(item.content)
+        web.loadUrl(item.content)
+        //web.loadUrl("https://litotom.com/shop/android9/")
 
         // read watch item
         val uid = FirebaseAuth.getInstance().currentUser?.uid

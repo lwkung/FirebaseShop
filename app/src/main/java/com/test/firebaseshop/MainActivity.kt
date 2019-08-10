@@ -15,6 +15,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
 import com.test.firebaseshop.model.Category
 import com.test.firebaseshop.model.Item
 import com.test.firebaseshop.view.ItemHolder
@@ -136,12 +137,23 @@ class MainActivity : AppCompatActivity(), FirebaseAuth.AuthStateListener {
         startActivity(intent)
     }
 
-    override fun onAuthStateChanged(p0: FirebaseAuth) {
+    override fun onAuthStateChanged(auth: FirebaseAuth) {
         val user = FirebaseAuth.getInstance().currentUser
         Log.d(TAG, "onAuthStateChanged: ${user?.uid}")
         if (user != null) {
             user_info.setText("Email: ${user.email} / ${user.isEmailVerified}")
             //verify_email.visibility = if (user.isEmailVerified) View.GONE else View.VISIBLE
+
+            //FCM token
+            FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "FCM Token: ${task.result?.token}")
+                    FirebaseFirestore.getInstance()
+                        .collection("users")
+                        .document(user.uid)
+                        .set(mapOf("token" to task.result?.token))
+                }
+            }
         } else {
             user_info.setText("Not login")
             verify_email.visibility = View.GONE
